@@ -48,7 +48,10 @@ class UserController extends Controller
      */
     public function show(string $id)
     {
-        
+        /* 
+            1. $id를 가지고 DB에서 레코드 하나를 인출한다.
+            2. 인출된 그 정보를 변수 $user에 할당 
+            3. 그 $user 값을 blade 에 전달하면서 실행.*/
     }
 
     /**

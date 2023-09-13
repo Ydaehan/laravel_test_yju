@@ -14,7 +14,9 @@
             <a href="/users">View Users List</a>
             @foreach ($users as $user)
                 <div>
+                    <a href="/users/{{ $user['id'] }}">
                     이름: {{ $user['name'] }}
+                    </a>
                     &nbsp;&nbsp;
                     이메일: {{ $user['email'] }}
                 </div>
