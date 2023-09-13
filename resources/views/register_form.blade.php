@@ -7,7 +7,7 @@
   <title>Document</title>
 </head>
 <body>
-  <form method="post" action="/register">
+  <form method="post" action="/users">
     @csrf
     <div>
       <label>이름:</label>
