@@ -110,13 +110,21 @@ class PostController extends Controller
         // DB posts 테이블에서 id 칼럼의 값이 $id인 레코드를 찾아서
         // 사용자가 입력한 title, content로 변경해준다.
         // update posts set title=?,content=? where id = ?
-        $post = Post::find($id);
+        // $post = Post::find($id);
 
-        $post->title = $request->title;
-        $post->content = $request->content;
-        $post->save();
+        // $post->title = $request->title;
+        // $post->content = $request->content;
+        // $post->save();
 
-        return redirect('/posts/'.$post->id);
+        // Post::where('id',$id)->update(['title'=>$request->title, 'content'=>$request->content]);
+        // update는 모델 클래스의 화이트 리스트와 블랙 리스트를 참조하지 않는다
+        // 연관 배열에 있는 모든 키를 변경할 컬럼이름으로 간주하고 update 문을 생성해 실행한다.
+        Post::where('id',$id)->update(['title'=>$request->title, 'content'=>$request->content]);
+        // Post::where('id',$id)->update($request->except('_token', '_method'));
+        // update posts set title=?, content=? where id=?
+        // 상세보기 페이지로 리다이렉트 한다.
+
+        return redirect('/posts/'.$id);
     }
 
     /**
@@ -124,6 +132,10 @@ class PostController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        // DB posts 테이블에서 id 칼럼 값이 $id 인 레코드를 삭제한다.
+        Post::destroy($id); // delete from 
+
+        // posts 리스트 보기
+        return redirect('/posts');
     }
 }
