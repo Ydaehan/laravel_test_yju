@@ -14,10 +14,17 @@ class PostController extends Controller
     {
         // 리스트를 보여주는 기능을 수행
         // DB의 posts 테이블의 레코드들을 읽어온다.
-        $posts = Post::all(); // posts 테이블의 모든 레코드들을 읽어온다.
+        // $posts = Post::all(); // posts 테이블의 모든 레코드들을 읽어온다.
+
         // posts객체에 collection 이라는 집합 자료형으로 반환해준다.
         // select * from posts;
 
+        $posts = Post::orderByDesc("created_at")->get();
+
+        // $count = Post::count();
+
+        $count = $posts->count();
+        
         // 그렇게 읽어온 레코드들을 뷰페이지에 전달한다.
         return view('posts.post_list',['posts'=>$posts]);
     }
@@ -36,16 +43,24 @@ class PostController extends Controller
     public function store(Request $request)
     {
         // $title = $request->input('title');
-        $title = $request->title;
-        $content = $request->content;
+        // $title = $request->title;
+        // $content = $request->content;
 
-        $post = new Post();
-        $post->title = $title;
-        $post->content = $content;
-        $post->user_id = 1; // 로그인 기능 구현 전까지 하드 코딩
+        // $post = new Post();
+        // $post->title = $title;
+        // $post->content = $content;
+        // $post->user_id = 1; // 로그인 기능 구현 전까지 하드 코딩
 
-        $post->save();
+        // $post->save();
 
+        // dd($request->all());
+        // Post::create(['title'=>$title,'content'=>$content, 'user_id'=>2]);
+        // $request->input('user_id',1);
+
+        $request->merge(['user_id'=> 1]);
+        // dd($request->all());
+
+        Post::create($request->all());
         return redirect('/posts');
     }
 
@@ -56,7 +71,21 @@ class PostController extends Controller
     {
         // DB의 posts 테이블에서 id 컬럼값으로 $id 값을 가지는 레코드를 읽어온다.
         // 읽어온 그 레코드를 블레이드 뷰 파일에 전달한다.
-        $post = Post::find($id); // select * from posts where id = $id;
+        // $post = Post::find($id); // select * from posts where id = $id;
+        
+        $post = Post::findOrFail($id);
+
+        // $post = Post::Where('id',$id)->first();
+
+        // $post = Post::firstWhere('id', $id);
+
+        // dd($post[0]->title); // die & dump
+        // Post::where('id', '>', $id)  ; // select * from posts where id > $id;
+        // select * from posts where id > $id and name = '홍길동';
+        // Post::where('id' > $id)->where('name','홍길동')->get();
+
+        // select * from posts where id > $id or name = '홍길동';
+        // Post::where('id > $id)->orWhere('name','홍길동')->get();
 
         return view('posts.show_post',['post'=>$post]);
     }
