@@ -17,6 +17,15 @@ class Post extends Model
     protected $fillable = ['title', 'content', 'user_id']; // 화이트 리스트
     // protected $guarded = ['created_at', 'updated_at'] // 블랙 리스트  
 
+
+    public function latestComment() {
+        return $this->hasOne(Comment::class)->latestOfMany();
+    }
+
+    public function oldestComment() {
+        return $this->hasOne(Comment::class)->oldestOfMany();
+    }
+
     public function user() {
         return $this->belongsTo(User::class);
     }

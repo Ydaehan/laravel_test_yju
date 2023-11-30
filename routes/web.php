@@ -21,6 +21,6 @@ Route::get('/', function () {
   return view('welcome', ['users'=>[]]);
 });
 
-Route::resource('users', UserController::class);
-Route::resource('posts', PostController::class);
-Route::resource('comment', CommentController::class);
+Route::resource('/users', UserController::class);
+Route::resource('/posts', PostController::class);
+Route::resource('/posts.comments', CommentController::class)->except(['create', 'show', 'index', 'edit']); // ->only(['store','update','destroy'])와 같음

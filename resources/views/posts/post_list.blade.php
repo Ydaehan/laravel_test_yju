@@ -7,6 +7,7 @@
   <title>post_list</title>
 </head>
 <body>
+  <div><a href="/posts/create">게시글 작성하기</a></div>
   <h2>게시글리스트</h2>
   <table>
     <th>연번</th><th>제목</th><th>작성자</th><th>작성일</th>
